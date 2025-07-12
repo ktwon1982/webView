@@ -1,23 +1,18 @@
 const express = require('express');
-const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
 app.use(cors());
 
-app.get('/chatgpt', async (req, res) => {
-  try {
-    const response = await axios.get('https://chatgpt.com', {
-      headers: {
-        'User-Agent': 'Mozilla/5.0',
-        'Accept': 'text/html'
-      }
-    });
-    res.set('Content-Type', 'text/html');
-    res.send(response.data);
-  } catch (error) {
-    res.status(500).send('Failed to fetch ChatGPT page');
-  }
+app.get('/chatgpt', (req, res) => {
+  const html = `
+    <html>
+      <head><title>Proxy Test</title></head>
+      <body><h1>This is a test HTML from proxy server</h1></body>
+    </html>
+  `;
+  res.set('Content-Type', 'text/html');
+  res.send(html);
 });
 
 const PORT = process.env.PORT || 3000;
